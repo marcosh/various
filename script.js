@@ -27,3 +27,24 @@ function clicked(e) {
 	
 	alert(x + " " + y)
 }
+
+function get_location() {
+	if (Modernizr.geolocation) {
+		navigator.geolocation.getCurrentPosition(show_map, handle_error,{enableHighAccuracy: true, maximumAge: 600000});
+	} else {
+		alert("it doesn't work");
+	}
+}
+
+function show_map(position) {
+  var latitude = position.coords.latitude;
+  var longitude = position.coords.longitude;
+  var accuracy = position.coords.accuracy;
+  alert(latitude + " " + longitude + " " + accuracy);
+}
+
+function handle_error(err) {
+	if(err.code == 1) {
+		alert("user said no");
+	}
+}
