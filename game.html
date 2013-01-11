@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="it">	
+	<head>
+		<title>Chocosite</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="style.css" />
+		<link rel="shortcut icon" href="sosuke.jpg" />
+		<script src="game_script.js"></script>
+		<script src="modernizr.min.js"></script>
+	</head>
+	<body>
+		<canvas id="canvas" width="300" height="500">
+		</canvas>
+		<script>
+			var canvas = document.getElementById("canvas");
+			window.addEventListener("load", draw_grid, false);
+		</script>
+	</body>
+</html>

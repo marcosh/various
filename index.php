@@ -35,6 +35,8 @@
 			<input type="button" name="geolocation" value="Geolocation" onclick="get_location()">
 		</form>
 		<a href="axwebservice.php">Ax web service</a>
+		<a href="udacity.html">udacity exercises</a>
+		<a href="game.html">gioco Agostino</a>
 		<footer>
 			<p>Footer</p>
 		</footer>

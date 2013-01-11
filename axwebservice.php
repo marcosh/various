@@ -29,8 +29,8 @@
 			
 			echo $xmlobj->Table->CITY;
 			
-			$wsdl1 = "http://localhost:58340/WCFService1/Service.svc?wsdl";
-			$client1 = new soapclient($wsdl1);
+			$wsdl1 = "http://MHT-JIGEN:8101/DynamicsAx/Services/MyServiceGroup?WSDL";
+			$client1 = new soapclient($wsdl1, array('name' => 'MHT\mperone'));
 		?>
 	</body>
 </html>
