@@ -12,7 +12,7 @@
 		<header>
 			<hgroup>
 				<h1>
-					Ciao!
+					<a href="main.php">Chocosite homepage</a>
 				</h1>
 				<nav>
 					<ul>

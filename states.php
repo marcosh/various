@@ -7,6 +7,6 @@
 		<?php
 			include 'header.html';
 		?>
-		<h2>Home page</h2>
+		<h2>Stati</h2>
 	</body>	
 </html>
