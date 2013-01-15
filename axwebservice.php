@@ -11,8 +11,6 @@
 	<body>
 	Ax web service </br>
 		<?php
-			echo "ciao". " </br>";			
-			
 			$zip = 97219;
 			
 			$wsdl = "http://www.webservicex.net/uszip.asmx?WSDL";
