@@ -2,6 +2,7 @@
 <html lang="it">	
 	<?php
 		include 'head.html';
+		include 'connectDB.php';
 	?>
 	<body>
 		<?php
