@@ -2,13 +2,14 @@
 <html lang="it">	
 	<head>
 		<title>Chocosite</title>
-		<meta charset="utf-8" />
+		<meta charset="utf-8">
 		<link rel="stylesheet" href="style.css" />
 		<link rel="shortcut icon" href="sosuke.jpg" />
 		<script src="game_script.js"></script>
 		<script src="modernizr.min.js"></script>
 	</head>
 	<body>
+		&#8592 &#8594 
 		<canvas id="canvas" width="300" height="500">
 		</canvas>
 		<p id="moves"> Number of moves: 0</p>
@@ -16,5 +17,16 @@
 			var canvas = document.getElementById("canvas");
 			window.addEventListener("load", init, false);
 		</script>
+		<input type="submit" value="Restart" onclick="restart()">
+		
+		<div id="openModal" class="modalDialog">
+			<div>
+				<a href="#close" title="Close" class="close">X</a>
+					
+				<h2>Hai vinto!</h2>
+				
+				<p id="winning_moves"></p> <!-- bisogna modificare innerHTML con javascript -->
+			</div>
+		</div>
 	</body>
 </html>
