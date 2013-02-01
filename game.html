@@ -1,23 +1,22 @@
 <!doctype html>
 <html lang="it">	
 	<head>
-		<title>Chocosite</title>
+		<title>U-turn</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="style.css" />
-		<link rel="shortcut icon" href="sosuke.jpg" />
+		<link rel="shortcut icon" href="uturn.jpg" />
 		<script src="game_script.js"></script>
 		<script src="modernizr.min.js"></script>
 	</head>
 	<body>
-		&#8592 &#8594 
 		<canvas id="canvas" width="300" height="500">
 		</canvas>
-		<p id="moves"> Number of moves: 0</p>
+		<p id="moves"> Numero di mosse: 0</p>
 		<script>
 			var canvas = document.getElementById("canvas");
 			window.addEventListener("load", init, false);
 		</script>
-		<input type="submit" value="Restart" onclick="restart()">
+		<input type="submit" value="Inizia da capo" onclick="restart()">
 		
 		<div id="openModal" class="modalDialog">
 			<div>
@@ -26,7 +25,18 @@
 				<h2>Hai vinto!</h2>
 				
 				<p id="winning_moves"></p> <!-- bisogna modificare innerHTML con javascript -->
+				
+				<input type="submit" value="Salva la tua sequenza di mosse" onclick="save_moves()">
+				<p></p>				
+				<input type="submit" value="Inizia una nuova partita" onclick="restart_modal()">
 			</div>
 		</div>
+		
+		<div id="moves_sequence">
+		
+		</div>
+		<script>
+			show_sequence_button();
+		</script>
 	</body>
 </html>

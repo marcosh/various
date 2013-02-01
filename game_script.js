@@ -1,8 +1,10 @@
 //var tiles_array = [[1,12,11],[2,"<-",10],[3,"",9],[4,"->",8],[5,6,7]]
-var tiles_array = [["1","12","11"],["2","<-","10"],["3","","9"],["4","->","8"],["5","6","7"]];
-var end_tiles_array = [["11","12","1"],["10","->","2"],["9","","3"],["8","<-","4"],["7","6","5"]];
+var tiles_array = [["1","12","11"],["2",String.fromCharCode(8592),"10"],["3","","9"],["4",String.fromCharCode(8594),"8"],["5","6","7"]];
+var end_tiles_array = [["11","12","1"],["10",String.fromCharCode(8594),"2"],["9","","3"],["8",String.fromCharCode(8592),"4"],["7","6","5"]];
 var empty_position = [2,1];
 var moves = 0;
+var moves_sequence = "";
+var saved_moves_sequence = "";
 
 function init() {
 	if(Modernizr.localstorage) 
@@ -10,7 +12,7 @@ function init() {
 		if(localStorage.gameinprogress && localStorage.gameinprogress == "true") {
 			retrieve_pos();
 		}
-	} 
+	}  
 	
 	if (canvas && canvas.getContext) {
 		var context = canvas.getContext('2d');
@@ -23,7 +25,7 @@ function init() {
 			
 			//update the number of moves
 			var moves_text = document.getElementById("moves");
-			moves_text.innerHTML = "Number of moves: " + moves;
+			moves_text.innerHTML = "Numero di mosse: " + moves;
 		}
 		
 		//add click event listener
@@ -33,7 +35,7 @@ function init() {
 
 function draw_grid(context) {
 	context.clearRect(0, 0, 301, 501);
-
+	
 	// draw the grid
 	context.beginPath();
 	
@@ -80,6 +82,7 @@ function draw_tiles(context) {
 	var text = "";
 	
 	context.font="50px cambria";
+	context.fillStyle = '#000066';
 	
 	for (var row = 0; row < 5; row++)
 	{
@@ -88,6 +91,8 @@ function draw_tiles(context) {
 			text = tiles_array[row][element];
 			if (text.length == 2) {
 				context.fillText(text, j * 100 + 22, (i + 1) * 100 -30);
+			} else if (text == String.fromCharCode(8592) || text == String.fromCharCode(8594)) {
+				context.fillText(text, j * 100 + 30, (i + 1) * 100 -30);
 			} else {
 				context.fillText(text, j * 100 + 35, (i + 1) * 100 -30);
 			}
@@ -128,6 +133,14 @@ function on_click(e) {
 	
 	store_pos();
 	
+	if(Modernizr.localstorage) {
+		if (!localStorage["moves_sequence"]) {
+			localStorage["moves_sequence"] = value;
+		} else {
+			localStorage["moves_sequence"] += " " + value;
+		}
+	}
+	
 	if (canvas && canvas.getContext) {
 		var context = canvas.getContext('2d');
 		if (context) {
@@ -139,7 +152,7 @@ function on_click(e) {
 			
 			//update the number of moves
 			var moves_text = document.getElementById("moves");
-			moves_text.innerHTML = "Number of moves: " + moves;
+			moves_text.innerHTML = "Numero di mosse: " + moves;
 		}
 	}
 	
@@ -147,16 +160,23 @@ function on_click(e) {
 		url = window.location.toString();
 		url = url.split("#")[0];
 		window.open(url + "#openModal", "_self");
+		
+		var winning_moves = document.getElementById("winning_moves");
+		winning_moves.innerHTML = "Hai risolto il gioco con " + moves + " mosse";
 	}
 }
 
 function restart() {
 	//tiles_array = [[1,12,11],[2,"<-",10],[3,"",9],[4,"->",8],[5,6,7]]
-	tiles_array = [["1","12","11"],["2","<-","10"],["3","","9"],["4","->","8"],["5","6","7"]]
+	tiles_array = [["1","12","11"],["2",String.fromCharCode(8592),"10"],["3","","9"],["4",String.fromCharCode(8594),"8"],["5","6","7"]];
 	empty_position = [2,1]
 	moves = 0
 	
 	store_pos();
+	
+	if(Modernizr.localstorage) {
+		localStorage["moves_sequence"] = "";
+	}
 	
 	if (canvas && canvas.getContext) {
 		var context = canvas.getContext('2d');
@@ -169,7 +189,7 @@ function restart() {
 			
 			//update the number of moves
 			var moves_text = document.getElementById("moves");
-			moves_text.innerHTML = "Number of moves: " + moves;
+			moves_text.innerHTML = "Numero di mosse: " + moves;
 		}
 	}
 }
@@ -177,6 +197,7 @@ function restart() {
 function get_position(e) {
 	var x;
 	var y;
+	var rect = canvas.getBoundingClientRect();
 	
 	if (e.pageX != undefined && e.pageY != undefined) {
 		x = e.pageX;
@@ -188,6 +209,9 @@ function get_position(e) {
 		y = e.clientY + document.body.scrollTop +
             document.documentElement.scrollTop;
     }
+	
+	x -= (canvas.offsetLeft + 3);
+    y -= (canvas.offsetTop + 3);
 	
 	return [Math.floor(y/100), Math.floor(x/100)];	
 }
@@ -257,3 +281,36 @@ function retrieve_pos() {
 function arrays_equal(a,b) { 
 	return !!a && !!b && !(a<b || b<a); 
 }
+
+function restart_modal() {
+	url = window.location.toString();
+	url = url.split("#")[0];
+	window.open(url + "#close", "_self");
+
+	restart();
+}
+
+function save_moves() {
+	localStorage["saved_moves_sequence"] = localStorage["moves_sequence"]; 
+	
+	show_sequence_button();
+}
+
+function show_sequence_button() {
+	var moves_div = document.getElementById("moves_sequence");
+	
+	if(Modernizr.localstorage && localStorage["saved_moves_sequence"]) 
+	{
+		moves_div.innerHTML = "<p></p><input type=\"submit\" value=\"Mostra la sequenza di mosse\" onclick=\"show_moves()\">";
+	}
+	else
+	{
+		moves_div.innerHTML = "";
+	}
+}
+
+function show_moves() {
+	var moves_div = document.getElementById("moves_sequence");
+	moves_div.innerHTML = "<p></p><input type=\"submit\" value=\"Nascondi la sequenza di mosse\" onclick=\"show_sequence_button()\"> <p></p><p>Hai risolto il gioco usando la seguente sequenza di mosse:</p><p>" + localStorage["saved_moves_sequence"] + "</p>";
+}
+
