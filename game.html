@@ -9,14 +9,25 @@
 		<script src="modernizr.min.js"></script>
 	</head>
 	<body>
+		<header>
+			<h1>
+				<img src="uturn.jpg" alt="U" width="150" height="160"/> <div>- TURN</div>
+			</h1>
+			<p>
+			<span class="bold">Istruzioni: </span> Il gioco &egrave composto da 14 tessere, contenenti i numeri dall'uno al dodici e due frecce, che possono muoversi 
+			in una griglia di 15 caselle. E' possibile muovere solo le tessere adiacenti la casella vuota, ma non &egrave consentito oltrepassare le barriere sistemate nello schema.
+			</p>
+			<p>
+			<span class="bold">Scopo del gioco: </span> All'inizio del gioco le tessere con i numeri sono disposte in senso antiorario e le due frecce stanno ad indicare
+			il senso antiorario. Scopo del gioco &egrave disporre le tessere contenenti i numeri in senso orario, mantenedo il 12 nella posizione centrale in alto, in modo da 
+			creare un orologio, e disporre le due frecce in modo che indichino il senso di rotazione orario
+			</p>
+		</header>		
+		
+		<br>
+		
 		<canvas id="canvas" width="300" height="500">
 		</canvas>
-		<p id="moves"> Numero di mosse: 0</p>
-		<script>
-			var canvas = document.getElementById("canvas");
-			window.addEventListener("load", init, false);
-		</script>
-		<input type="submit" value="Inizia da capo" onclick="restart()">
 		
 		<div id="openModal" class="modalDialog">
 			<div>
@@ -26,11 +37,25 @@
 				
 				<p id="winning_moves"></p> <!-- bisogna modificare innerHTML con javascript -->
 				
-				<input type="submit" value="Salva la tua sequenza di mosse" onclick="save_moves()">
+				<span id="save_moves_button"><input type="submit" value="Salva la tua sequenza di mosse" onclick="save_moves()"></span>
+				<script>
+					var remove = document.getElementById('save_moves_button');
+					if(!Modernizr.localstorage) {
+						remove.innerHTML = "";
+					}
+				</script>
 				<p></p>				
 				<input type="submit" value="Inizia una nuova partita" onclick="restart_modal()">
 			</div>
 		</div>
+		
+		<div id="right">
+		<p id="moves"> Numero di mosse: 0</p>
+		<script>
+			var canvas = document.getElementById("canvas");
+			window.addEventListener("load", init, false);
+		</script>
+		<input type="submit" value="Inizia da capo" onclick="restart()">		
 		
 		<div id="moves_sequence">
 		
@@ -38,5 +63,9 @@
 		<script>
 			show_sequence_button();
 		</script>
+		</div>
+		<footer>
+			<p>Gioco inventato e brevettato da Agostino Recchia. Realizzato in questa versione da Marco Perone. </p>
+		</footer>
 	</body>
 </html>
